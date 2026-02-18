@@ -1,14 +1,995 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello world project</title>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JKT IT - Recruitment Landing Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <body>
-    <div id="root"></div>
+        :root {
+            --primary: #031867;
+            --gold: #FFD700;
+            --light-blue: #87CEEB;
+            --text-dark: #1a202c;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+        }
 
-    <script type="module" src="/client/App.tsx"></script>
-  </body>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: var(--white);
+            border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-box {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+
+        .logo-text {
+            font-weight: bold;
+            font-size: 1.125rem;
+            color: var(--primary);
+        }
+
+        nav {
+            display: none;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        @media (min-width: 768px) {
+            nav {
+                display: flex;
+            }
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #022152;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--primary);
+        }
+
+        .btn-gold:hover {
+            background: #ffc700;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--white);
+            color: var(--white);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline-primary:hover {
+            background: rgba(3, 24, 103, 0.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary) 50%, #1e3a8a 100%);
+            padding: 5rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                padding: 8rem 1.5rem;
+            }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 384px;
+            height: 384px;
+            background: rgba(135, 206, 235, 0.1);
+            border-radius: 50%;
+            transform: translate(192px, -192px);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 384px;
+            height: 384px;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 50%;
+            transform: translate(-192px, 192px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 48rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(135, 206, 235, 0.2);
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+            color: var(--light-blue);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-size: 2.25rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 3.75rem;
+            }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: rgb(191, 219, 254);
+            margin-bottom: 2rem;
+            max-width: 40rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .hero-buttons {
+                flex-direction: row;
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            section {
+                padding: 8rem 1.5rem;
+            }
+        }
+
+        .section-light {
+            background: var(--bg-light);
+        }
+
+        .section-dark {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary) 50%, #1e3a8a 100%);
+            color: var(--white);
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 3rem;
+            }
+        }
+
+        .section-dark .section-title {
+            color: var(--white);
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 42rem;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .section-dark .section-subtitle {
+            color: rgb(191, 219, 254);
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        @media (min-width: 768px) {
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            transition: box-shadow 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-dark {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(3, 24, 103, 0.1);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-dark h3 {
+            color: var(--white);
+        }
+
+        .card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .card-dark p {
+            color: rgb(191, 219, 254);
+        }
+
+        /* Position Cards */
+        .position-card {
+            background: var(--white);
+            border: 2px solid rgba(135, 206, 235, 0.3);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            transition: box-shadow 0.3s;
+        }
+
+        .position-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .position-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .position-title h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .position-title p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .position-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(135, 206, 235, 0.2);
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 9999px;
+        }
+
+        .position-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .position-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Features List */
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .feature-icon.light-blue {
+            background: rgba(135, 206, 235, 0.2);
+            color: var(--primary);
+        }
+
+        .feature-item h4 {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Testimonials */
+        .testimonial {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 0.75rem;
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+            font-size: 0.875rem;
+        }
+
+        .testimonial p {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.875rem;
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--gold);
+        }
+
+        .author-avatar.light {
+            background: rgba(135, 206, 235, 0.2);
+            color: var(--light-blue);
+        }
+
+        .author-info p:first-child {
+            color: var(--white);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p:last-child {
+            color: rgb(191, 219, 254);
+            font-size: 0.875rem;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .two-column.reverse {
+            direction: rtl;
+        }
+
+        .two-column.reverse > * {
+            direction: ltr;
+        }
+
+        .placeholder-image {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(3, 24, 103, 0.05) 0%, rgba(135, 206, 235, 0.1) 100%);
+            border: 1px solid rgba(135, 206, 235, 0.2);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            opacity: 0.3;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 3rem 1.5rem;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgb(191, 219, 254);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.875rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(135, 206, 235, 0.2);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgb(191, 219, 254);
+            font-size: 0.875rem;
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: var(--white);
+            border: 1px solid #e5e7eb;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .cta-box h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .cta-box p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .cta-box a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .cta-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        .text-center {
+            text-align: center;
+        }
+
+        .max-w-xl {
+            max-width: 42rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .max-w-2xl {
+            max-width: 56rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Arrow */
+        .arrow {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-box">JKT</div>
+                <div class="logo-text">JKT IT</div>
+            </div>
+            <nav>
+                <a href="#about">Why Join</a>
+                <a href="#internship">Internship</a>
+                <a href="#positions">Positions</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="btn btn-primary">Apply Now</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🇯🇵 Hiring Now</div>
+            <h1>Build Your Career Working with Japan</h1>
+            <p>Join JKT IT and collaborate directly with Japanese team-members and clients. Start your career with stability, growth, and international experience.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-gold">Apply for Internship <span class="arrow">→</span></button>
+                <button class="btn btn-outline">View Positions</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Join JKT Section -->
+    <section id="about" class="section-light">
+        <div class="container">
+            <h2 class="section-title">Why Choose JKT?</h2>
+            <p class="section-subtitle">We offer something unique in Myanmar's tech landscape</p>
+            
+            <div class="grid grid-3">
+                <!-- Card 1 -->
+                <div class="card">
+                    <div class="card-icon">👥</div>
+                    <h3>Work with Japanese Teams</h3>
+                    <p>Collaborate directly with experienced Japanese professionals and clients. Gain international experience and cultural exchange.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card">
+                    <div class="card-icon">🏆</div>
+                    <h3>Stability & Growth</h3>
+                    <p>A reliable company backed by Japanese standards. Clear career paths, professional development, and long-term opportunities.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Competitive Packages</h3>
+                    <p>Salary and benefits that reflect international standards. Support for professional growth, training, and development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internship Program Section -->
+    <section id="internship">
+        <div class="container">
+            <div class="two-column">
+                <div>
+                    <div class="badge">🎓 Our Programs</div>
+                    <h2 class="section-title" style="text-align: left; margin-top: 1rem;">Launch Your Tech Career</h2>
+                    <p style="color: var(--text-light); margin-bottom: 2rem;">Our internship program is designed to give you real-world experience working on meaningful projects with mentorship from experienced professionals.</p>
+                    
+                    <div class="features">
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>
+                                <h4>Hands-on Project Experience</h4>
+                                <p>Work on real client projects from day one</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>
+                                <h4>Mentorship & Training</h4>
+                                <p>Learn from experienced developers and Japanese team leads</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>
+                                <h4>Competitive Internship Salary</h4>
+                                <p>Fair compensation for your contributions</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>
+                                <h4>Potential Full-Time Conversion</h4>
+                                <p>Top performers often transition to full-time roles</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary">Apply for Internship <span class="arrow">→</span></button>
+                </div>
+
+                <div class="placeholder-image">💻</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Junior Developer Section -->
+    <section class="section-light">
+        <div class="container">
+            <div class="two-column reverse">
+                <div>
+                    <div class="badge">👨‍💼 For Professionals</div>
+                    <h2 class="section-title" style="text-align: left; margin-top: 1rem;">Join as a Junior Developer</h2>
+                    <p style="color: var(--text-light); margin-bottom: 2rem;">If you're a recent graduate or have 1-3 years of experience, we're looking for talented individuals to grow with our team.</p>
+                    
+                    <div class="features">
+                        <div class="feature-item">
+                            <div class="feature-icon light-blue">🎯</div>
+                            <div>
+                                <h4>1-3 Years Experience Welcome</h4>
+                                <p>We believe in investing in emerging talent</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon light-blue">🎯</div>
+                            <div>
+                                <h4>Structured Learning Path</h4>
+                                <p>Clear progression from junior to senior roles</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon light-blue">🎯</div>
+                            <div>
+                                <h4>Competitive Junior Salary</h4>
+                                <p>Better than average for Myanmar market</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary">View Junior Positions <span class="arrow">→</span></button>
+                </div>
+
+                <div class="placeholder-image">💼</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Positions Section -->
+    <section id="positions" class="section-light">
+        <div class="container">
+            <h2 class="section-title">Open Positions</h2>
+            <p class="section-subtitle">We're actively recruiting. Find roles that match your experience level.</p>
+            
+            <div class="grid grid-2">
+                <!-- Frontend Intern -->
+                <div class="position-card">
+                    <div class="position-header">
+                        <div class="position-title">
+                            <h3>Frontend Intern</h3>
+                            <p>React • TypeScript</p>
+                        </div>
+                        <span class="position-badge">Internship</span>
+                    </div>
+                    <p>Help build beautiful web interfaces for international clients. Work with React and TypeScript while learning from experienced developers.</p>
+                    <button class="btn btn-primary">Apply Now</button>
+                </div>
+
+                <!-- Backend Junior -->
+                <div class="position-card">
+                    <div class="position-header">
+                        <div class="position-title">
+                            <h3>Backend Developer (Junior)</h3>
+                            <p>Node.js • PostgreSQL</p>
+                        </div>
+                        <span class="position-badge">Junior</span>
+                    </div>
+                    <p>Build robust APIs and server-side solutions. Join our backend team and collaborate with Japanese engineering leads on production systems.</p>
+                    <button class="btn btn-primary">Apply Now</button>
+                </div>
+
+                <!-- Tech Lead -->
+                <div class="position-card">
+                    <div class="position-header">
+                        <div class="position-title">
+                            <h3>Tech Lead / Manager</h3>
+                            <p>5+ years experience</p>
+                        </div>
+                        <span class="position-badge">Management</span>
+                    </div>
+                    <p>Lead a team of developers and work directly with our Japanese headquarters. Help build JKT's engineering culture and direction.</p>
+                    <button class="btn btn-primary">Apply Now</button>
+                </div>
+
+                <!-- QA Engineer -->
+                <div class="position-card">
+                    <div class="position-header">
+                        <div class="position-title">
+                            <h3>QA Engineer</h3>
+                            <p>Automation • Manual Testing</p>
+                        </div>
+                        <span class="position-badge">All Levels</span>
+                    </div>
+                    <p>Ensure quality of our software products. Work with both automated and manual testing strategies for international clients.</p>
+                    <button class="btn btn-primary">Apply Now</button>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <p style="color: var(--text-light); margin-bottom: 1.5rem;">Don't see what you're looking for?</p>
+                <button class="btn btn-outline-primary">View All Positions</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories Section -->
+    <section class="section-dark">
+        <div class="container">
+            <h2 class="section-title">Success Stories</h2>
+            <p class="section-subtitle">Hear from our team members about their journey at JKT</p>
+            
+            <div class="grid grid-3">
+                <!-- Testimonial 1 -->
+                <div class="testimonial">
+                    <div class="stars">★★★★★</div>
+                    <p>"Joining JKT as an intern was the best decision for my career. I went from learning React tutorials to shipping features for real clients in a few months."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">NT</div>
+                        <div class="author-info">
+                            <p>Nay Thiha</p>
+                            <p>Junior Frontend Developer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial">
+                    <div class="stars">★★★★★</div>
+                    <p>"Working with the Japanese team has completely changed how I think about software quality and professionalism. It's accelerated my growth as a developer."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar light">KK</div>
+                        <div class="author-info">
+                            <p>Khin Kyaw</p>
+                            <p>Backend Developer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial">
+                    <div class="stars">★★★★★</div>
+                    <p>"The company's commitment to stability and growth is genuine. They invest in your career, not just your labor. Plus, the compensation is fair."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MS</div>
+                        <div class="author-info">
+                            <p>Min Soe</p>
+                            <p>Tech Lead</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="section-light">
+        <div class="container max-w-2xl text-center">
+            <h2 class="section-title">Ready to Join JKT?</h2>
+            <p class="section-subtitle">Don't miss this opportunity to build your career working with Japanese professionals. Apply now and let's grow together.</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 1.5rem;">Apply Today <span class="arrow">→</span></button>
+                <button class="btn btn-outline-primary" style="width: 100%; justify-content: center; padding: 1.5rem;">Learn More</button>
+            </div>
+
+            <div class="cta-box">
+                <h3>Have Questions?</h3>
+                <p>Email us at <a href="mailto:careers@jkt-it.com">careers@jkt-it.com</a></p>
+                <p>Or fill out an application and our team will get back to you shortly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <div class="logo" style="margin-bottom: 1rem;">
+                        <div class="logo-box">JKT</div>
+                        <div class="logo-text">JKT IT</div>
+                    </div>
+                    <p style="color: rgb(191, 219, 254); font-size: 0.875rem;">Building bridges between Myanmar and Japan's tech communities.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Culture</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Careers</h4>
+                    <ul>
+                        <li><a href="#internship">Internship</a></li>
+                        <li><a href="#positions">Open Roles</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-divider">
+                © 2024 JKT IT Team. All rights reserved. | Building Myanmar's IT Future
+            </div>
+        </div>
+    </footer>
+</body>
 </html>
