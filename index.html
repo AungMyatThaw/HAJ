@@ -1005,33 +1005,38 @@
 
     <!-- Posts Script -->
     <script>
-        // Load posts from API
-        async function loadPostsFeed() {
-            try {
-                const response = await fetch('/api/posts');
-                const posts = await response.json();
+        // LocalStorage key for posts
+        const POSTS_STORAGE_KEY = 'jkt_admin_posts';
 
-                const postsFeed = document.getElementById('postsFeed');
+        // Get posts from localStorage
+        function getPostsFromStorage() {
+            const posts = localStorage.getItem(POSTS_STORAGE_KEY);
+            return JSON.parse(posts) || [];
+        }
 
-                if (posts.length === 0) {
-                    postsFeed.innerHTML = `
-                        <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-                            <p>No posts yet. Check back soon for updates!</p>
-                        </div>
-                    `;
-                    return;
-                }
+        // Load posts from localStorage
+        function loadPostsFeed() {
+            const posts = getPostsFromStorage();
+            const postsFeed = document.getElementById('postsFeed');
 
-                postsFeed.innerHTML = posts.map(post => `
-                    <div class="post-feed-item">
-                        <img src="${post.image}" alt="Post" class="post-image">
-                        <div class="post-text">${escapeHtml(post.text)}</div>
-                        <div class="post-meta">${post.createdAt}</div>
+            if (posts.length === 0) {
+                postsFeed.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <p>No posts yet. Check back soon for updates!</p>
                     </div>
-                `).join('');
-            } catch (error) {
-                console.error('Error loading posts:', error);
+                `;
+                return;
             }
+
+            // Display posts in reverse order (newest first)
+            const reversedPosts = [...posts].reverse();
+            postsFeed.innerHTML = reversedPosts.map(post => `
+                <div class="post-feed-item">
+                    <img src="${post.image}" alt="Post" class="post-image">
+                    <div class="post-text">${escapeHtml(post.text)}</div>
+                    <div class="post-meta">${post.createdAt}</div>
+                </div>
+            `).join('');
         }
 
         // Escape HTML to prevent XSS
@@ -1043,6 +1048,13 @@
 
         // Load posts when page loads
         document.addEventListener('DOMContentLoaded', loadPostsFeed);
+
+        // Optional: Listen for storage changes (when admin posts from another tab/window)
+        window.addEventListener('storage', function(e) {
+            if (e.key === POSTS_STORAGE_KEY) {
+                loadPostsFeed();
+            }
+        });
     </script>
 
     <!-- Footer -->
